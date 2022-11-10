@@ -6,11 +6,11 @@ const controller = {
     try {
       let { name, userId } = req.body;
       let user = await User.findById(userId);
-      let city = await City.find({ name: name });
+      let cityExists = await City.exists({ name: {'$regex': name, $options: 'i'} });
 
       if (!user || user?.role !== "admin") {
         ErrorMessage(res, 400, "You don't have authorization to do this operation");
-      } else if (city.length) {
+      } else if (cityExists) {
         ErrorMessage(res, 400, `The city ${name} already exists in the database`);
       } else {
         let new_city = await City.create(req.body);
