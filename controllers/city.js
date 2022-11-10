@@ -1,22 +1,36 @@
-const City = require('../models/City');
+const City = require("../models/City");
+const User = require("../models/User");
 
 const controller = {
   create: async (req, res) => {
-    
     try {
-      let new_city = await City.create(req.body);
-      res.status(201).json({
-        id: new_city._id,
-        success: true,
-        message: "The user was created successfully"
-      }); 
-    } catch(error) {
-      res.status(400).json({
-        success: false,
-        message: error.message
-      });
-    }
-  }
-}
+      let { name, userId } = req.body;
+      let user = await User.findById(userId);
+      let city = await City.find({ name: name });
 
-module.exports = controller;  
+      if (!user || user?.role !== "admin") {
+        ErrorMessage(res, 400, "You don't have authorization to do this operation");
+      } else if (city.length) {
+        ErrorMessage(res, 400, `The city ${name} already exists in the database`);
+      } else {
+        let new_city = await City.create(req.body);
+        res.status(201).json({
+          id: new_city._id,
+          success: true,
+          message: "The city was created successfully",
+        });
+      }
+    } catch (error) {
+      Error.message(res, 400, error.message);
+    }
+  },
+};
+
+const ErrorMessage = (res, status, message) => {
+  res.status(status).json({
+    sucess: false,
+    message: message,
+  });
+};
+
+module.exports = controller;
