@@ -21,7 +21,7 @@ const controller = {
         });
       }
     } catch (error) {
-      Error.message(res, 400, error.message);
+      Errormessage(res, 400, error.message);
     }
   },
 };
