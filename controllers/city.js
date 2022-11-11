@@ -26,10 +26,9 @@ const controller = {
   },
   read: async (req, res) => {
     let {query} = req;
-    let queryNames = ["continent", "name"];
     let newQuery = {};
 
-    queryNames.forEach(queryName => {      
+    Object.keys(query).forEach(queryName => {      
       if(query[queryName]) {
         if(queryName === "name") {
           newQuery[queryName] = {'$regex': query[queryName], $options: 'i'};
