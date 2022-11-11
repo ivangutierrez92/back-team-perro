@@ -6,7 +6,7 @@ const controller = {
     try {
       let { name, userId } = req.body;
       let user = await User.findById(userId);
-      let cityExists = await City.exists({ name: {'$regex': name, $options: 'i'} });
+      let cityExists = await City.exists({ name: { $regex: name, $options: "i" } });
 
       if (!user || user?.role !== "admin") {
         errorMessage(res, 400, "You don't have authorization to do this operation");
@@ -25,26 +25,43 @@ const controller = {
     }
   },
   read: async (req, res) => {
-    let {query} = req;
+    let { query } = req;
     let newQuery = {};
 
-    Object.keys(query).forEach(queryName => {      
+    Object.keys(query).forEach(queryName => {
       if (query[queryName]) {
         if (queryName === "name") {
-          newQuery[queryName] = {'$regex': query[queryName], $options: 'i'};
+          newQuery[queryName] = { $regex: query[queryName], $options: "i" };
         } else {
           newQuery[queryName] = query[queryName];
         }
       }
-    })
-    
+    });
+
     try {
       let allCities = await City.find(newQuery);
       res.status(200).json({
         response: allCities,
         success: true,
-        message: "All cities"
+        message: "All cities",
       });
+    } catch (error) {
+      errorMessage(res, 400, error.message);
+    }
+  },
+  show: async (req, res) => {
+    let { id } = req.params;
+    try {
+      let city = await City.findById(id).populate({ path: "userId", select: "name photo -_id" });
+      if (city) {
+        res.status(200).json({
+          response: city,
+          success: true,
+          message: "City found",
+        });
+      } else {
+        errorMessage(res, 404, "Couldn't find the city");
+      }
     } catch (error) {
       errorMessage(res, 400, error.message);
     }
