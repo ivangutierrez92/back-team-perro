@@ -29,8 +29,8 @@ const controller = {
     let newQuery = {};
 
     Object.keys(query).forEach(queryName => {      
-      if(query[queryName]) {
-        if(queryName === "name") {
+      if (query[queryName]) {
+        if (queryName === "name") {
           newQuery[queryName] = {'$regex': query[queryName], $options: 'i'};
         } else {
           newQuery[queryName] = query[queryName];
@@ -45,8 +45,8 @@ const controller = {
         success: true,
         message: "All cities"
       });
-    } catch(error) {
-      errorMessage(res, 400, error.message)
+    } catch (error) {
+      errorMessage(res, 400, error.message);
     }
   },
 };
