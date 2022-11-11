@@ -24,6 +24,31 @@ const controller = {
       errorMessage(res, 400, error.message);
     }
   },
+  read: async (req, res) => {
+    let {query} = req;
+    let newQuery = {};
+
+    Object.keys(query).forEach(queryName => {      
+      if (query[queryName]) {
+        if (queryName === "name") {
+          newQuery[queryName] = {'$regex': query[queryName], $options: 'i'};
+        } else {
+          newQuery[queryName] = query[queryName];
+        }
+      }
+    })
+    
+    try {
+      let allCities = await City.find(newQuery);
+      res.status(200).json({
+        response: allCities,
+        success: true,
+        message: "All cities"
+      });
+    } catch (error) {
+      errorMessage(res, 400, error.message);
+    }
+  },
 };
 
 const errorMessage = (res, status, message) => {
