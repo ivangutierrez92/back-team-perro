@@ -37,6 +37,23 @@ const controller = {
       errorMessage(res, 404, "Please specify the cityId");
     }
   },
+  update: async (req, res) => {
+    let { id } = req.params;
+    try {
+      let itinerary = await Itinerary.findOneAndUpdate({ _id: id }, req.body, { new: true });
+      if (itinerary) {
+        res.status(200).json({
+          id: itinerary._id,
+          success: true,
+          message: "The itinerary was modified successfully",
+        });
+      } else {
+        errorMessage(res, 404, "Couldn't find the itinerary to edit");
+      }
+    } catch (error) {
+      errorMessage(res, 400, error.message);
+    }
+  },
 };
 
 const errorMessage = (res, status, message) => {
