@@ -49,6 +49,23 @@ const controller = {
       errorMessage(res, 400, error.message);
     }
   },
+  update: async (req, res) => {
+    let { id } = req.params;
+    try {
+      let city = await City.findOneAndUpdate({ _id: id }, req.body, { new: true });
+      if (city) {
+        res.status(200).json({
+          id: city._id,
+          success: true,
+          message: "The city was modified successfully",
+        });
+      } else {
+        errorMessage(res, 404, "Couldn't find the city to edit");
+      }
+    } catch (error) {
+      errorMessage(res, 400, error.message);
+    }
+  },
   show: async (req, res) => {
     let { id } = req.params;
     try {
