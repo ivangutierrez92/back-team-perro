@@ -1,7 +1,8 @@
 let router = require('express').Router();
-let { read, create } = require('../controllers/city');
+let { read, show, create } = require('../controllers/city');
 
-router.get('/', read);
 router.post('/', create);
+router.get('/', read);
+router.get('/:id', show);
 
 module.exports = router;
