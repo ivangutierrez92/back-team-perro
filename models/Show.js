@@ -1,12 +1,3 @@
-// Definir el modelo Show con los siguientes campos:
-//         hotelId: referenciar con el id de mongo del hotel que corresponda
-//         name: de tipo string, obligatorio
-//         description; de tipo string, obligatorio
-//         photo: de tipo string, obligatorio
-//         price: de tipo number, obligatorio
-//         date: de tipo date, obligatorio
-//         userId:  referenciar con el id de mongo del usuario admin que corresponda
-//     definir script de creación reutilizando los datos del sprint-1
 
 const mongoose = require("mongoose");
 

@@ -1,39 +1,33 @@
-const show=require('../models/Show');
+const Show = require("../models/Show");
 
-constroller={
+const controller = {
+  // create: async (req, res) => {
+  //   try {
+  //     let newShow = await Show.create(req.body);
+  //     res.status(201).json({
+  //       id: newShow.id,
+  //       sucess: true,
+  //       message: "the show was created successfully",
+  //     });
+  //   } catch (error) {
 
-  create: async(req,res)=>{
+  //   }
+  // },
+  read: async (req, res) => {
+
+
     try {
-      let newShow = await show.create(req.body);
-      res.status(201).json({
-
-        id: newShow.id,
-        sucess:true,
-        message: "the show was created successfully"
-
-
-      })
-
-
-
+      let show = await Show.find(req.query,"-userId");
+      if (show) {
+        res.status(200).json({
+          response: show,
+          success: true,
+          message: "show found",
+        });
+      }
     } catch (error) {
-      
+      console.log(error);
     }
-
-
-
-
-
-
-
-
-
-  }
-
-
-
-
-
-
-  
-}
+  },
+};
+module.exports = controller;
