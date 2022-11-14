@@ -10,7 +10,6 @@ router.use("/api/users", users);
 router.use("/api/cities", cities);
 router.use("/api/hotels", hotels);
 router.use("/api/itineraries", itineraries);
-router.use("/api/", itineraries);
 router.use("/api/shows", shows);
 
 module.exports = router;
