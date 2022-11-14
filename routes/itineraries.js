@@ -1,6 +1,7 @@
 let router = require('express').Router();
-let { read } = require('../controllers/itinerary');
+let { create, read } = require('../controllers/itinerary');
 
+router.post('/', create);
 router.get('/', read);
 
 module.exports = router;
