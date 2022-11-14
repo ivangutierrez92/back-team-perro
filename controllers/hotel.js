@@ -87,7 +87,40 @@ readOne: async (req, res) => {
       });
       
     }
+  },
+  update: async (req, res) => {
+      let { id } = req.params;
+      let update= req.body;
+
+    try {
+      let hotel = await Hotel.findOneAndUpdate({_id:id},update,{new:true})
+
+       if (hotel) {
+        res.status(200).json({
+          id: hotel._id,
+          success: true,
+          message: "Hotel updated",
+        });
+      }  else {
+        res.status(404).json({
+          success: false,
+          message: "no hotel found",
+        });
+      }
+      
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+
+
+
+
   }
+
+
 
   
 };
