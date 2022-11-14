@@ -1,4 +1,5 @@
 const Show = require("../models/Show");
+const { show } = require("./city");
 
 const controller = {
   create: async (req, res) => {
@@ -29,6 +30,32 @@ const controller = {
         res.status(404).json({
           success: false,
           message: "Show not found",
+        });
+      }
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
+  updateShow: async (req, res) => {
+    let { id } = req.params;
+    update = req.body;
+    try {
+      let show = await Show.findOneAndUpdate({ _id: id }, update, {
+        new: true,
+      });
+      if (show) {
+        res.status(200).json({
+          id: show._id,
+          success: true,
+          message: "Show updated",
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          message: "no Show found",
         });
       }
     } catch (error) {
