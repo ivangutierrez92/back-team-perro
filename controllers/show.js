@@ -1,18 +1,18 @@
 const Show = require("../models/Show");
 
 const controller = {
-  // create: async (req, res) => {
-  //   try {
-  //     let newShow = await Show.create(req.body);
-  //     res.status(201).json({
-  //       id: newShow.id,
-  //       sucess: true,
-  //       message: "the show was created successfully",
-  //     });
-  //   } catch (error) {
+  create: async (req, res) => {
+    try {
+      let newShow = await Show.create(req.body);
+      res.status(201).json({
+        id: newShow.id,
+        sucess: true,
+        message: "the show was created successfully",
+      });
+    } catch (error) {
 
-  //   }
-  // },
+    }
+  },
   read: async (req, res) => {
 
 
