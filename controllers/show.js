@@ -65,5 +65,28 @@ const controller = {
       });
     }
   },
+  deleteShow: async (req, res) => {
+    let { id } = req.params;
+    try {
+      let show = await Show.findOneAndDelete({ _id: id });
+      if (show) {
+        res.status(200).json({
+          id: show._id,
+          success: true,
+          message: "Show deleted successfully",
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          message: "no show found",
+        });
+      }
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
 };
 module.exports = controller;
