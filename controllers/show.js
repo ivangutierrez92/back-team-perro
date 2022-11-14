@@ -10,23 +10,32 @@ const controller = {
         message: "the show was created successfully",
       });
     } catch (error) {
-
+      res.status(400).json({
+        sucess: false,
+        message: error.message,
+      });
     }
   },
   read: async (req, res) => {
-
-
     try {
-      let show = await Show.find(req.query,"-userId");
+      let show = await Show.find(req.query, "-userId");
       if (show) {
         res.status(200).json({
           response: show,
           success: true,
           message: "show found",
         });
+      } else {
+        res.status(404).json({
+          success: false,
+          message: "Show not found",
+        });
       }
     } catch (error) {
-      console.log(error);
+      res.status(400).json({
+        success: false,
+        message: error.message,
+      });
     }
   },
 };
