@@ -30,6 +30,7 @@ const controller = {
         order = {name: req.query.order}
       }
 
+
     
 
 
@@ -54,6 +55,41 @@ const controller = {
       });
     }
   },
+
+
+readOne: async (req, res) => {
+    let {id}= req.params;
+
+    try {
+       let hotel = await Hotel.findById(id).populate("userId","name photo -_id");
+      if (hotel) {
+        res.status(200).json({
+          response: hotel,
+          success: true,
+          message: "Hotel found",
+        });
+      }  else {
+        res.status(404).json({
+          success: false,
+          message: "no hotel found",
+        });
+      
+      
+      }
+
+
+
+      
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+      
+    }
+  }
+
+  
 };
 
 module.exports = controller;
