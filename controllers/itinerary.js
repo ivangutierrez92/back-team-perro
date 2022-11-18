@@ -1,5 +1,6 @@
 const Itinerary = require("../models/Itinerary");
 const City = require("../models/City");
+const {errorMessage } = require('../utils/utils');
 
 const controller = {
   create: async (req, res) => {
@@ -73,11 +74,5 @@ const controller = {
   },
 };
 
-const errorMessage = (res, status, message) => {
-  res.status(status).json({
-    sucess: false,
-    message: message,
-  });
-};
 
 module.exports = controller;

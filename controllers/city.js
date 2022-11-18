@@ -1,4 +1,5 @@
 const City = require("../models/City");
+const {errorMessage } = require('../utils/utils');
 
 const controller = {
   create: async (req, res) => {
@@ -29,11 +30,15 @@ const controller = {
 
     try {
       let allCities = await City.find(newQuery);
-      res.status(200).json({
-        response: allCities,
-        success: true,
-        message: "All cities",
-      });
+      if (allCities.length) {
+        res.status(200).json({
+          response: allCities,
+          success: true,
+          message: "All cities",
+        });
+      } else {
+        errorMessage(res, 404, "Couldn't find cities");
+      }
     } catch (error) {
       errorMessage(res, 400, error.message);
     }
@@ -76,7 +81,7 @@ const controller = {
     let { id } = req.params;
     try {
       let city = await City.findById(id).populate({ path: "userId", select: "name photo -_id" });
-      if (city) {
+      if (city.length) {
         res.status(200).json({
           response: city,
           success: true,
@@ -91,11 +96,6 @@ const controller = {
   },
 };
 
-const errorMessage = (res, status, message) => {
-  res.status(status).json({
-    sucess: false,
-    message: message,
-  });
-};
+
 
 module.exports = controller;
