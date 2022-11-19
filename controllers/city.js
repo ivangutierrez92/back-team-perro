@@ -81,7 +81,7 @@ const controller = {
     let { id } = req.params;
     try {
       let city = await City.findById(id).populate({ path: "userId", select: "name photo -_id" });
-      if (city.length) {
+      if (city) {
         res.status(200).json({
           response: city,
           success: true,
