@@ -1,5 +1,5 @@
 const City = require("../models/City");
-const {errorMessage } = require('../utils/utils');
+const { errorMessage } = require("../utils/utils");
 
 const controller = {
   create: async (req, res) => {
@@ -18,23 +18,23 @@ const controller = {
     let { query } = req;
     let newQuery = {};
 
-    Object.keys(query).forEach(queryName => {
-      if (query[queryName]) {
-        if (queryName === "name") {
-          newQuery[queryName] = { $regex: query[queryName], $options: "i" };
-        } else {
-          newQuery[queryName] = query[queryName];
-        }
-      }
-    });
+    if (query.name) {
+      newQuery.name = { $regex: query.name, $options: "i" };
+    }
+    if (query.continent?.length) {
+      newQuery.continent = query.continent;
+    }
+    if (query.userId) {
+      newQuery.userId = query.userId;
+    }
 
     try {
-      let allCities = await City.find(newQuery);
+      let allCities = await City.find(newQuery, "-userId");
       if (allCities.length) {
         res.status(200).json({
           response: allCities,
           success: true,
-          message: "All cities",
+          message: "The request of cities was a success",
         });
       } else {
         errorMessage(res, 404, "Couldn't find cities");
@@ -95,7 +95,5 @@ const controller = {
     }
   },
 };
-
-
 
 module.exports = controller;
