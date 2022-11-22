@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const schema =require('../schemas/hotel')
-const validator= require('../middleware/validatorHotel')
+const validator= require('../middleware/validator')
 const {
   create,
   read,

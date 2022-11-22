@@ -6,7 +6,7 @@ const validator=(schema)=>[
   
   
   if(data.error){
-      return res.status(400).json({
+      return res.json({
         success: false,
         message: data.error.details.map(message=>message.message),
       });
