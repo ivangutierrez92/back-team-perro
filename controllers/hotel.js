@@ -57,7 +57,7 @@ const controller = {
     let { id } = req.params;
 
     try {
-      let hotel = await Hotel.findById(id,"-userId").populate(
+      let hotel = await Hotel.findById(id).populate(
         "userId",
         "name photo -_id"
       );

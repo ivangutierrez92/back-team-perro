@@ -41,7 +41,7 @@ describe("POST /api/cities", function () {
       .post("/api/cities")
       .send({})
       .expect(response => {
-        assert.equal(response.status, 400);
+      assert.equal(response.status, 400);
       })
       .end(function (err, res) {
         if (err) {
@@ -51,3 +51,4 @@ describe("POST /api/cities", function () {
       });
   });
 });
+
