@@ -1,3 +1,4 @@
+const { query } = require("express");
 const Show = require("../models/Show");
 
 const controller = {
@@ -17,8 +18,16 @@ const controller = {
     }
   },
   read: async (req, res) => {
+   let query={}
+    if(req.query.userId){
+      query.userId=req.query.userId;
+    }else{
+      query=req.query
+    }
+
+
     try {
-      let show = await Show.find(req.query, "-userId");
+      let show = await Show.find(query, "-userId");
       if (show) {
         res.status(200).json({
           response: show,
@@ -87,5 +96,45 @@ const controller = {
       });
     }
   },
+readOne:async (req,res)=>{
+  let {id}=req.params;
+  try {
+    
+    let show = await Show.findById(id, "-userId")
+      if(show){
+
+        res.status(200).json({
+          response:show,
+          success:true,
+          message:"show"
+        })
+      }else{
+        res.status(404).json({
+          success:false,
+          message:"not found"
+        });
+      }
+
+  } catch (error) {
+    res.status(404).json({
+      success:false,
+      message:error.message,
+    })
+  }
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
 };
 module.exports = controller;

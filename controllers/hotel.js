@@ -28,9 +28,11 @@ const controller = {
     if (req.query.order) {
       order = { name: req.query.order };
     }
-
+    if(req.query.userId){
+      query.userId = req.query.userId;
+    }
     try {
-      let allHotels = await Hotel.find(query).sort(order).populate("cityId");
+      let allHotels = await Hotel.find(query,"-userId").sort(order).populate("cityId");
       if (allHotels.length) {
         res.status(200).json({
           response: allHotels,
@@ -130,6 +132,8 @@ const controller = {
       });
     }
   },
+
+ 
 };
 
 module.exports = controller;
