@@ -1,24 +1,24 @@
 const joi = require("joi");
 
 const schema = joi.object({
-  name: joi.string().required().lowercase().messages({
+  name: joi.string().required().messages({
     "any.required": "The field 'name' is required, please enter it",
     "string.empty": "The field 'name' mustn't be empty, please fill it",
     "string.base": "The field 'name' must be a string",
   }),
-  lastName: joi.string().required().lowercase().messages({
+  lastName: joi.string().required().messages({
     "any.required": "The field 'lastName' is required, please enter it",
     "string.empty": "The field 'lastName' mustn't be empty, please fill it",
     "string.base": "The field 'lastName' must be a string",
   }),
 
-  role: joi.string().lowercase().valid("user", "admin").required().messages({
+  role: joi.string().valid("user", "admin").required().messages({
     "any.required": "The field 'role' is required, please enter it",
     "any.only": "The field 'role' must be a valid role",
     "string.empty": "The field 'role' mustn't be empty, please fill it",
     "string.base": "The field 'role' must be a string",
   }),
-  email: joi.string().email().lowercase().required().messages({
+  email: joi.string().email().required().messages({
     "any.required": "The field 'email' is required, please enter it",
     "string.email": "The field 'email' must be a valid email address",
     "string.empty": "The field 'email' mustn't be empty, please fill it",

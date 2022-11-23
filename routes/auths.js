@@ -4,7 +4,7 @@ const { accountExists: accountExistsSignUp } = require("../middleware/accountExi
 let validator = require("../middleware/validator");
 let schema = require("../schemas/signup");
 
-router.post("/signup", validator(schema), accountExistsSignUp, register);
+router.post("/sign-up", validator(schema), accountExistsSignUp, register);
 router.get("/verify/:code", verify);
 
 module.exports = router;
