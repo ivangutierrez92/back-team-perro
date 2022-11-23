@@ -38,7 +38,7 @@ const controller = {
     try {
       let user = await User.findOneAndUpdate({ code }, { verified: true }, { new: true });
       if (user) {
-        return res.redirect(process.env.FRONT_URL + "/verify/success");
+        return res.redirect(process.env.FRONT_URL + "/signin");
       } else {
         return userNotFoundResponse(req, res);
       }
