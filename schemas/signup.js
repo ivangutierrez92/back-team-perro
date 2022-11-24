@@ -1,6 +1,6 @@
 const joi = require("joi");
 
-const schema = joi.object({
+const schemaSignUp = joi.object({
   name: joi.string().required().messages({
     "any.required": "The field 'name' is required, please enter it",
     "string.empty": "The field 'name' mustn't be empty, please fill it",
@@ -43,4 +43,4 @@ const schema = joi.object({
   }),
 });
 
-module.exports = schema;
+module.exports = schemaSignUp;
