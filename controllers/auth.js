@@ -1,6 +1,6 @@
 const User = require("../models/User");
 const crypto = require("crypto");
-const { userNotFoundResponse, userSignedUpResponse } = require("../config/responses");
+const { userNotFoundResponse, userSignedUpResponse, userSignedOutResponse } = require("../config/responses");
 const bcryptjs = require("bcryptjs");
 const { errorMessage } = require("../utils/utils");
 const accountVerificationEmail = require("../config/accountVerificationEmail");
@@ -42,6 +42,16 @@ const controller = {
       } else {
         return userNotFoundResponse(req, res);
       }
+    } catch (error) {
+      errorMessage(res, 400, error.message);
+    }
+  },
+
+  exit: async (req, res, next) => {
+    const { id } = req.user;
+    try {
+      await User.findByIdAndUpdate(id, { online: false });
+      return userSignedOutResponse(req, res);
     } catch (error) {
       errorMessage(res, 400, error.message);
     }
