@@ -1,10 +1,6 @@
 const User = require("../models/User");
 const crypto = require("crypto");
-const {
-  userNotFoundResponse,
-  userSignedUpResponse,
-  invalidCredentialsResponse,
-} = require("../config/responses");
+const { userNotFoundResponse, userSignedUpResponse, userSignedOutResponse } = require("../config/responses");
 const bcryptjs = require("bcryptjs");
 const { errorMessage } = require("../utils/utils");
 const accountVerificationEmail = require("../config/accountVerificationEmail");
@@ -54,7 +50,6 @@ const controller = {
       errorMessage(res, 400, error.message);
     }
   },
-
   signIn: async (req, res, next) => {
     const { password } = req.body;
     const { user } = req;
@@ -65,7 +60,7 @@ const controller = {
       if (verifypassword) {
         const userDataBase = await User.findOneAndUpdate(
           { _id: user.id },
-          { online: true },
+          { logged: true },
           { new: true }
         );
         const token = jwt.sign(
@@ -73,7 +68,7 @@ const controller = {
             id: userDataBase._id,
             name: userDataBase.name,
             photo: userDataBase.photo,
-            online: userDataBase.online,
+            logged: userDataBase.logged,
           },
           process.env.KEY_JWT,
           { expiresIn: 60*60*24 }
@@ -93,8 +88,8 @@ const controller = {
         });
     }
   },
-
-signInWithToken: async (req, res, next) => {
+  
+  signInWithToken: async (req, res, next) => {
         let { user } = req //desestructuro
         console.log(user)
         try {
@@ -107,6 +102,16 @@ signInWithToken: async (req, res, next) => {
             next(error) //respuesta del catch
         }
     },
+    
+  exit: async (req, res, next) => {
+    const { id } = req.user;
+    try {
+      await User.findByIdAndUpdate(id, { logged: false });
+      return userSignedOutResponse(req, res);
+    } catch (error) {
+      errorMessage(res, 400, error.message);
+    }
+  },
 }
 
 module.exports = controller;
