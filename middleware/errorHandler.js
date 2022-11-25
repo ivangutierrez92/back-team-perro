@@ -1,6 +1,6 @@
 const errorHandlers = {
   notFound(req, res, next) {
-    console.log(res)
+  
     res.status(404).json({ message: `Route ${req.url} with the method ${req.method} isn't implemented` });
   },
   errorHandler(error, _req, res, _next) {
