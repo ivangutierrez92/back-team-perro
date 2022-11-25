@@ -23,7 +23,7 @@ app.use(cors());
 
 app.use('/', indexRouter);
 
-app.use(errorHandlers.notFound);
+// app.use(errorHandlers.notFound);
 
 // error handler
 app.use(errorHandlers.errorHandler);
