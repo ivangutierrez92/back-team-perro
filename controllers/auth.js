@@ -88,8 +88,8 @@ const controller = {
         });
     }
   },
-
-signInWithToken: async (req, res, next) => {
+  
+  signInWithToken: async (req, res, next) => {
         let { user } = req //desestructuro
         console.log(user)
         try {
@@ -102,15 +102,16 @@ signInWithToken: async (req, res, next) => {
             next(error) //respuesta del catch
         }
     },
-    exit: async (req, res, next) => {
-      const { id } = req.user;
-      try {
-        await User.findByIdAndUpdate(id, { logged: false });
-        return userSignedOutResponse(req, res);
-      } catch (error) {
-        errorMessage(res, 400, error.message);
-      }
-    },
+    
+  exit: async (req, res, next) => {
+    const { id } = req.user;
+    try {
+      await User.findByIdAndUpdate(id, { logged: false });
+      return userSignedOutResponse(req, res);
+    } catch (error) {
+      errorMessage(res, 400, error.message);
+    }
+  },
 }
 
 module.exports = controller;
