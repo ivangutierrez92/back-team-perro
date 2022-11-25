@@ -1,10 +1,17 @@
 let router = require("express").Router();
-let { register, verify } = require("../controllers/auth");
-const { accountExists: accountExistsSignUp } = require("../middleware/accountExistsSignUp");
-let validator = require("../middleware/validator");
-let schema = require("../schemas/signup");
+let { register, verify, signIn,signInWithToken } = require("../controllers/auth");
+const {accountExists: accountExistsSignUp} = require("../middleware/accountExistsSignUp");
+const {accountExists: accountExistsSignIn} = require("../middleware/accountExistsSignIn");
+const {accountHasBeenVerified} = require("../middleware/accountHasBeenVerified");
+const  mustSignIn  = require("../middleware/mustSignIn");
+const passport =require("../config/passport")
 
-router.post("/sign-up", validator(schema), accountExistsSignUp, register);
+let validator = require("../middleware/validator");
+let schemaSignUp = require("../schemas/signup");
+let schemaSignIn = require("../schemas/signin");
+router.post("/sign-up", validator(schemaSignUp), accountExistsSignUp, register);
 router.get("/verify/:code", verify);
+router.post("/sign-in",validator(schemaSignIn),accountExistsSignIn,accountHasBeenVerified,signIn);
+router.post("/token",passport.authenticate("jwt", { session: false }),mustSignIn, signInWithToken);
 
 module.exports = router;

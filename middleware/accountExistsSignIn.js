@@ -7,7 +7,7 @@ async function accountExists(req, res, next) {
         req.user = user
         return next()
     }
-    invalidCredentialsResponse(req, res)
+    return invalidCredentialsResponse(req, res)
 }
 
 module.exports = { accountExists }
