@@ -13,5 +13,5 @@ router.post("/sign-up", validator(schemaSignUp), accountExistsSignUp, register);
 router.get("/verify/:code", verify);
 router.post("/sign-in",validator(schemaSignIn),accountExistsSignIn,accountHasBeenVerified,signIn);
 router.post("/token",passport.authenticate("jwt", { session: false }),mustSignIn, signInWithToken);
-
+router.get("/auth/me/:id",mustSignIn,)
 module.exports = router;
