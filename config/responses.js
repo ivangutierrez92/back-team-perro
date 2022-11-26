@@ -47,12 +47,28 @@ function verifyResponse(req,res) {
     })
 }
 
-module.exports = {
+function notOwnerResponse(req, res) {
+    return res.status(401).json({
+        success: false,
+        message: 'You should be the owner to make this operation'
+    });
+}
+
+function documentNotFound(req, res) {
+    return res.status(404).json({
+        success: false,
+        message: "Couldn't find the document"
+    });
+}
+
+ module.exports = {
     userSignedUpResponse,
     userExistsResponse,
     userNotFoundResponse,
     userSignedOutResponse,
     mustSignInResponse,
     invalidCredentialsResponse,
-    verifyResponse
+    verifyResponse,
+    notOwnerResponse,
+    documentNotFound
 }
