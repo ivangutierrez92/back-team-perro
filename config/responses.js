@@ -47,12 +47,22 @@ function verifyResponse(req,res) {
     })
 }
 
-module.exports = {
-    userSignedUpResponse,
-    userExistsResponse,
-    userNotFoundResponse,
-    userSignedOutResponse,
-    mustSignInResponse,
-    invalidCredentialsResponse,
-    verifyResponse
+function mustBeItselfResponse(req, res) {
+  return res.status(401).json({
+    success: false,
+    message: "You must be same person to make this operation"
+  })
+
+
 }
+
+module.exports = {
+  userSignedUpResponse,
+  userExistsResponse,
+  userNotFoundResponse,
+  userSignedOutResponse,
+  mustSignInResponse,
+  invalidCredentialsResponse,
+  verifyResponse,
+  mustBeItselfResponse,
+};
