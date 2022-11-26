@@ -4,10 +4,12 @@ const { errorMessage } = require("../utils/utils");
 
 const controller = {
   create: async (req, res) => {
+    let { user, body } = req;
+    body.userId = user.id;
     try {
-      let city = await City.findById(req.body.cityId);
+      let city = await City.findById(body.cityId);
       if (city) {
-        let new_itinerary = await Itinerary.create(req.body);
+        let new_itinerary = await Itinerary.create(body);
         res.status(201).json({
           id: new_itinerary._id,
           success: true,
@@ -25,7 +27,7 @@ const controller = {
     if (query.cityId) {
       try {
         let allItineraries = await Itinerary.find({ cityId: query.cityId }, "-userId");
-        
+
         if (allItineraries.length) {
           res.status(200).json({
             response: allItineraries,
@@ -41,16 +43,15 @@ const controller = {
     } else if (query.userId) {
       try {
         let allItineraries = await Itinerary.find({ userId: query.userId }, "-userId");
-        if(allItineraries.length) {
+        if (allItineraries.length) {
           res.status(200).json({
             response: allItineraries,
             success: true,
             message: "Itineraries from user",
           });
         } else {
-          errorMessage(res, 404, "Couldn't find itineraries for this user")
+          errorMessage(res, 404, "Couldn't find itineraries for this user");
         }
-        
       } catch (error) {
         errorMessage(res, 400, error.message);
       }
@@ -92,23 +93,23 @@ const controller = {
       errorMessage(res, 400, error.message);
     }
   },
-  show: async(req, res) => {
-    let {id} = req.params;
+  show: async (req, res) => {
+    let { id } = req.params;
     try {
       let itinerary = await Itinerary.findById(id, "-userId");
-      if(itinerary) {
+      if (itinerary) {
         res.status(200).json({
           response: itinerary,
           success: true,
           message: "Itinerary found",
-        })
+        });
       } else {
-        errorMessage(res, 400, "Couldn't find the itinerary")
+        errorMessage(res, 400, "Couldn't find the itinerary");
       }
-    } catch(error) {
-      errorMessage(res, 400, error.message)
+    } catch (error) {
+      errorMessage(res, 400, error.message);
     }
-  }
+  },
 };
 
 module.exports = controller;
