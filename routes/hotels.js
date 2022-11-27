@@ -12,7 +12,12 @@ const {
   deleteHotel,
 } = require("../controllers/hotel");
 
-router.post("/",validator(schema),create);
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  validator(schema),
+  create
+);
 router.get("/", read);
 router.get("/:id", readOne);
 router.patch("/:id",passport.authenticate("jwt", { session: false }),userIsOwner(Hotel),update);
