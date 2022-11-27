@@ -3,8 +3,10 @@ const { errorMessage } = require("../utils/utils");
 
 const controller = {
   create: async (req, res) => {
+    let {user, body} = req;
+    body.userId = user.id;
     try {
-      let new_city = await City.create(req.body);
+      let new_city = await City.create(body);
       res.status(201).json({
         id: new_city._id,
         success: true,

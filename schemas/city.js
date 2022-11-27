@@ -24,9 +24,6 @@ const schema = joi.object({
     "number.integer": "The field 'population' must be an integer, please change it",
     "number.min": "The field 'population' must be a number greater or equal to 0, please change it",
   }),
-  userId: joi.any().required().messages({
-    "any.required": "The field 'userId' is required, please enter it",
-  }),
 });
 
 module.exports = schema;
