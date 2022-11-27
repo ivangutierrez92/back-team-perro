@@ -24,7 +24,7 @@ describe("GET /api/cities", function () {
 
 describe("POST /api/cities", function () {
   let token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzN2U4MmZkNjg2NzIzMmI3NWFjYThkMiIsIm5hbWUiOiJpdmFuQ2l0byEiLCJwaG90byI6Imh0dHBzOi8vbWVkaWEtZXhwMS5saWNkbi5jb20vZG1zL2ltYWdlL0M0RTAzQVFFMGJJM1FvUDlMTUEvcHJvZmlsZS1kaXNwbGF5cGhvdG8tc2hyaW5rXzgwMF84MDAvMC8xNTQxMjk3ODU5NDUzP2U9MjE0NzQ4MzY0NyZ2PWJldGEmdD10TmpXaFlxOUZWbzNJcXZpOGlzanZRSE5RMFlnUTBSaEh3WHZNWlBSdGpvIiwibG9nZ2VkIjp0cnVlLCJpYXQiOjE2Njk0NzkyNDAsImV4cCI6MTY2OTU2NTY0MH0.jSqqJ4OiO07trZr_9oFIzThMTvdWZu_3wJIWTxC8nX0";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzODE1MzIxMWE5YjkxODk1MmM3MGM4MiIsIm5hbWUiOiJJdsOhbiIsInBob3RvIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUxtNXd1MG96NXBVSjZ3WWVCdDdsNm1jaWxIbzRGRkRQTVdEMlJ1cTk0Qjc9czI4OC1wLXJ3LW5vIiwibG9nZ2VkIjp0cnVlLCJpYXQiOjE2Njk1ODMyNDgsImV4cCI6MTY2OTY2OTY0OH0.LobtKPdahyDZ2dhHKMd9wEMbcuUGwDPEXRqId2P_yw8";
 
   it("Should recieve in body a string in name field", function (done) {
     request(app)
@@ -63,7 +63,7 @@ describe("DELETE /api/cities/:id", function () {
   it("Should delete a city successfully", function (done) {
     request(app)
       .delete("/api/cities/6383d320386f3616930ab5ff")
-      auth(token, {type: "bearer"})
+      .auth(token, {type: "bearer"})
       .expect(response => {
         assert.isTrue(response.body.success);
       })
