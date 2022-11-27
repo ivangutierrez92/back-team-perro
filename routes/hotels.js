@@ -15,7 +15,7 @@ const {
 router.post("/",validator(schema),create);
 router.get("/", read);
 router.get("/:id", readOne);
-router.patch("/:id",passport.authenticate("jwt", { session: false }),update);
+router.patch("/:id",passport.authenticate("jwt", { session: false }),userIsOwner(Hotel),update);
 router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),
