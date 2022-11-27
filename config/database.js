@@ -6,9 +6,9 @@ let connection = async () => {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
-    console.log("Connected to database")
+   
   } catch (error) {
-    console.log(error.message);
+   
   }
 };
 

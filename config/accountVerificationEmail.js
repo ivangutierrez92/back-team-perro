@@ -54,7 +54,7 @@ const accountVerificationEmail = async (mail, code) => {
             console.error(error)
             return
         }
-        console.log('Email sent!')
+      
     })
 }
 
