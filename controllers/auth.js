@@ -96,7 +96,7 @@ const controller = {
 
   signInWithToken: async (req, res, next) => {
     let { user } = req; //desestructuro
-    console.log(user);
+ 
     try {
       return res.json({
         //respuesta

@@ -7,12 +7,12 @@ const controller = {
       let newShow = await Show.create(req.body);
       res.status(201).json({
         id: newShow._id,
-        sucess: true,
+        success: true,
         message: "the show was created successfully",
       });
     } catch (error) {
       res.status(400).json({
-        sucess: false,
+        success: false,
         message: error.message,
       });
     }
