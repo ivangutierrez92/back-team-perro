@@ -35,7 +35,8 @@ function getEmailBody({mail, host, code}) {
             <p>
             Please <a href="${host}/auth/verify/${code}">Verify your account</a> so you can enjoy our page  to the fullest.
             </p>
-            <p>Sincerely yours: Mytinerary's team.</p>
+            </br>
+            <h4>Sincerely yours: Mytinerary's team.</p>
         </div>
     `
 }
