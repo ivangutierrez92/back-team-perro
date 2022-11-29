@@ -4,7 +4,7 @@ const { errorMessage } = require("../utils/utils");
 
 const controller = {
   create: async (req, res) => {
-    let body = req;
+    let {body} = req;
     body.userId = [];
     try {
       let itinerary = await Itinerary.findOne({ _id: body.itineraryId });
