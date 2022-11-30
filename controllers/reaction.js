@@ -24,10 +24,14 @@ const controller = {
   },
   read: async (req, res) => {
     let { itineraryId } = req.query;
+    let {user} = req;
     if (itineraryId) {
       try {
-        let reactions = await Reaction.find({ itineraryId });
+        let reactions = await Reaction.find({ itineraryId }).lean();
         if (reactions.length) {
+          reactions = reactions.map(reaction => {
+            let reacted = !!reaction.userId.find(userReaction => userReaction.equals(user.id));
+            return { ...reaction, userId: reaction.userId.length, reacted }});
           res.status(200).json({
             success: true,
             response: reactions,
@@ -53,7 +57,7 @@ const controller = {
             reaction.save();
             res.status(200).json({
               success: true,
-              response: { id: reaction._id, name: reaction.name, length: reaction.userId.length },
+              id: reaction._id,
               message: "The user unreacted to the reaction",
             });
           } else {
@@ -61,7 +65,7 @@ const controller = {
             reaction.save();
             res.status(200).json({
               success: true,
-              response: { id: reaction._id, name: reaction.name, length: reaction.userId.length },
+              id: reaction._id,
               message: "The user reacted to the reaction",
             });
           }
