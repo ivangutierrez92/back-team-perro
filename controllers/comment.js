@@ -3,11 +3,12 @@ const Comment = require('../models/Comment')
 const controller={
 
   read: async (req,res)=>{
+      let {showId}= req.query
+      console.log(req.user)
 
+      try {
 
-    try {
-
-      let comment =await Comment.find(req)
+      let comment =await Comment.find({showId}).sort({updatedAt:-1}).populate({path:"userId" , select:"name"})
       if (comment){
         res.status(200).json({
           response:comment,
@@ -23,6 +24,7 @@ const controller={
         }
 
       } catch (error) {
+
       res.status(400).json({
         success: false,
         message: error.message
@@ -34,11 +36,13 @@ const controller={
   create: async(req,res)=>{
 
     let {user,body}=req;
-    body.user= user.id;
+   console.log(req.user.id)
     try{
-      let new_comment = Comment.create(body);
+
+      let new_comment =await Comment.create({showId:body.showId,comment:body.comment,userId:user.id,photo:user.photo});
+      console.log(new_comment)
       res.status(201).json({
-        id: new_comment.id,
+        response:new_comment,
         success: true,
         messsage: "comment created successfully"
       })
