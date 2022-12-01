@@ -23,15 +23,16 @@ const controller = {
     }
   },
   read: async (req, res) => {
-    let { itineraryId } = req.query;
-    let {user} = req;
+    let { itineraryId, userId } = req.query;
+    let { user } = req;
     if (itineraryId) {
       try {
         let reactions = await Reaction.find({ itineraryId }).lean();
         if (reactions.length) {
           reactions = reactions.map(reaction => {
             let reacted = !!reaction.userId.find(userReaction => userReaction.equals(user.id));
-            return { ...reaction, userId: reaction.userId.length, reacted }});
+            return { ...reaction, userId: reaction.userId.length, reacted };
+          });
           res.status(200).json({
             success: true,
             response: reactions,
@@ -39,6 +40,24 @@ const controller = {
           });
         } else {
           errorMessage(res, 404, "Couldn't find reactions for this itinerary");
+        }
+      } catch (error) {
+        errorMessage(res, 400, error.message);
+      }
+    } else if (userId) {
+      try {
+        let reactions = await Reaction.find({ userId }, "-userId").populate("itineraryId", "name photo");
+        if (reactions.length) {
+          res.status(200).json({
+            success: true,
+            response: reactions,
+            message: "Reactions from user",
+          });
+        } else {
+          res.status(404).json({
+            success: false,
+            message: "Couldn't find reactions for this user",
+          });
         }
       } catch (error) {
         errorMessage(res, 400, error.message);
@@ -77,6 +96,24 @@ const controller = {
       }
     } else {
       errorMessage(res, 400, "You need to specify the name and itineraryId");
+    }
+  },
+  pullUser: async (req, res) => {
+    let { user } = req;
+    let { id } = req.params;
+    try {
+      let reaction = await Reaction.findOneAndUpdate({ _id: id }, { $pull: { userId: user.id } }, {new: true});
+      if (reaction) {
+        res.status(200).json({
+          success: true,
+          id: reaction._id,
+          message: "Reaction deleted succesfully",
+        });
+      } else {
+        errorMessage(res, 404, "Couldn't find the reaction");
+      }
+    } catch (error) {
+      errorMessage(res, 400, error.message);
     }
   },
 };
