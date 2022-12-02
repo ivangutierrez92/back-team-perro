@@ -18,9 +18,9 @@ const reactionSchema = joi.object({
     "string.base": "The field 'icon back' must be a string",
     "string.uri": "The field 'icon back' must be an url",
   }),
-  itineraryId: joi.any().required().messages({
-    "any.required": "The field 'Itinerary' is required, please enter it",
-  }),
+  itineraryId: joi.any(),
+  showId: joi.any(),
+
 });
 
 module.exports = reactionSchema;
