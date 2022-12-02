@@ -28,6 +28,7 @@ require("dotenv").config();
 require("../../config/database");
 const Reaction = require("../../models/Reaction");
 const Itinerary = require("../../models/Itinerary");
+const Show = require("../../models/Show");
 
 const populate = async () => {
   let itineraries = await Itinerary.find({});
@@ -35,6 +36,7 @@ const populate = async () => {
     for(let itinerary of itineraries) {
       for(let element of reactions) {
         let reaction = await Reaction.findOne({ itineraryId: itinerary._id, name: element.name });
+        console.log(reaction);
         if (!reaction) {
           Reaction.create({
             itineraryId: itinerary._id,
@@ -46,7 +48,8 @@ const populate = async () => {
         }
       };
     };
-  }  
+  }
+  
 }
 populate();
  
