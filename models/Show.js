@@ -9,6 +9,7 @@ const schema = new mongoose.Schema({
   price: { type: Number, required: true },
   date: { type: Date, required: true },
   userId: { type: mongoose.Types.ObjectId, ref: "users", required: true },
+  comment: [{ type: mongoose.Types.ObjectId,ref: "comments"}],
 });
 
 const show = mongoose.model("shows", schema);

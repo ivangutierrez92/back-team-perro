@@ -1,7 +1,8 @@
 const joi = require("joi");
 
 const schema = joi.object({
-  showId: joi.string().hex().length(24).required(),
+  showId: joi.string().hex().length(24),
+  itineraryId: joi.string().hex().length(24),
   comment: joi.string().min(3).required(),
 });
 
