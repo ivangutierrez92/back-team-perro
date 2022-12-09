@@ -30,7 +30,7 @@ const controller = {
         
     let newModel = await model.populate({
       path: "comment.userId",
-      select: "name, photo",
+      select: "name photo",
     });
       if (newModel.comment.length) {
         res.status(200).json({
