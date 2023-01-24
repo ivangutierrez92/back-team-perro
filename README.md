@@ -1,10 +1,6 @@
-# back-team-perro
-[link con las tareas para sprint-2](https://docs.google.com/spreadsheets/d/1cKvarwmh65qzjWaUeM8PnDiscF79SZiE6RAmsXldYQo/edit?usp=sharing)
+##MyTinerary Backend
 
+Implementación del Backend de MyTinerary, una aplicación para buscar itinerarios en ciudades, y eventos en hoteles.
 
-Por hacer :
-  schema hoteles y Ciudades : todo lo que llegue sea LowerCase()
-  en front css titulo text-transform: capitalize;
-
-
+Parte de los proyectos del Bootcamp Mindhub.
 
